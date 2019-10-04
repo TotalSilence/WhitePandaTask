@@ -1,0 +1,717 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "EditIXMainTracker";
+    Layout = null;
+}
+
+<h2>FE Login</h2>
+<div class="row" data-ng-controller="EditIXMainTrackerController">
+    <loading></loading>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="widget widget-table content-table" style="margin-bottom:20px">
+            <form name="FormFELogin" data-ng-submit="SubmitFELogin(FormFELogin.$valid)" novalidate>
+                <div class="widget-content">
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Scheduling Date</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_scheduling_date" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Site ID</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_site" disabled />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Account</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_account" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Market</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_marcket" disabled />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Activity Date</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_activity_date" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Shift</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedShift" disabled>
+                                    <option value="">N/A</option>
+                                    <option value="1">Daytime</option>
+                                    <option value="2">Maintenance Window</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>SoW</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_sow" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;" data-ng-if="HasIX">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>IX SoW</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedIXSoW" disabled>
+                                    <option value="">N/A</option>
+                                    <option value="{{x.id}}" data-ng-repeat="x in IXSowList" data-ng-selected="SelectedIXSoW==x.id">{{x.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Pre Integration</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedPreIntegration" disabled>
+                                    <option value="">N/A</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">Partial</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;" data-ng-if="HasIX">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>LKF</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedLKF" disabled>
+                                    <option value="">N/A</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Scripts</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedScripts" disabled>
+                                    <option value="">N/A</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Service Affecting?</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedServiceAffecting" disabled>
+                                    <option value="">N/A</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Pre HW Configuration</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_pre_configuration" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Post HW Configuration</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_post_configuration" disabled />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>FE Name</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_fe_name" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>FE Contact Number</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_fe_contact_number" disabled />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>FE E-mail ID</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_fe_email_id" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Work Order Number</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="txt_work_order_no" name="ddl_work_order_no" disabled />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>EIM Login</b></label>
+                        </div>
+
+                        <div class="col-sm-3 col-md-3 col-lg-3" data-ng-class="{ 'has-error' : FormFELogin.txt_eimlogin.$invalid && FormFELogin.$submitted }">
+                            <input type="text" class="form-control" placeholder="Enter EIM Login" name="txt_eimlogin" data-ng-model="txt_eimlogin" data-ng-disabled="ObjFeDetails.login_status_id==1" required />
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>NFSD Login</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogin.txt_nfsdlogin.$invalid && FormFELogin.$submitted }">
+                                <input type="text" class="form-control" placeholder="Enter NFSD Login" name="txt_nfsdlogin" data-ng-model="txt_nfsdlogin" required data-ng-disabled="ObjFeDetails.login_status_id==1" />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>NFSD Login Snap</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogin.ddl_nfsdloginsnap.$invalid && FormFELogin.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedNFSDLoginSnap" name="ddl_nfsdloginsnap" data-ng-disabled="ObjFeDetails.login_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">Awaited</option>
+                                    <option value="3">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>NFSD Login Snap Upload</b></label>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <input type="file" data-ng-model="UploadedFile" onchange="angular.element(this).scope().uploadFile(this.files)" id="FileUpload1" data-ng-disabled="ObjFeDetails.login_status_id==1" />
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                            <a data-ng-if="ObjFeDetails.nfsd_login_snap_upload" title="download uploaded file" href="~/Upload-file/{{ObjFeDetails.nfsd_login_snap_upload}}" download="{{ObjFeDetails.nfsd_login_snap_upload}}" target="_blank" class="btn btn-success btn-sm pull-right"><i class="fa fa-download"></i></a>
+                        </div>
+                        <div data-ng-show="SelectedNFSDLoginSnap==3 || SelectedNFSDLoginSnap==0" class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Reason For Login NFSD Snap NA</b></label>
+                        </div>
+                        <div data-ng-show="SelectedNFSDLoginSnap==3 || SelectedNFSDLoginSnap==0" class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Enter Reason For Login" data-ng-model="txt_ReasonForLogin" data-ng-disabled="ObjFeDetails.login_status_id==1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin:0; margin-top:20px;">
+                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align:center">
+                            <input data-ng-if="ObjFeDetails.login_status_id!=1" type="submit" class="btn btn-success" value="Submit" data-ng-click="setAtts('Submit')" name="Submit" id="btnSubmit" />
+                            <input data-ng-if="ObjFeDetails.login_status_id!=1" type="button" class="btn btn-primary" value="Save" data-ng-click="BtnSaveClick()" name="Save" id="btnSave" />
+                            <input type="button" class="btn btn-info" value="Back" name="Back" data-ng-click="BtnBack_Click()" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>COP</b></label>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <input type="file" data-ng-model="UploadedFile1" id="FileUpload1" onchange="angular.element(this).scope().uploadFile(this.files)" />
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                            <a data-ng-if="ObjFeDetails.cop" title="download uploaded file" href="~/Upload-file/{{ObjFeDetails.cop}}" download="{{ObjFeDetails.cop}}" target="_blank" class="btn btn-success btn-sm pull-right"><i class="fa fa-download"></i></a>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>COP Status</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedCopStatus" disabled>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Uploaded</option>
+                                    <option value="2">Not Uploaded</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Logout Ticket Number</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_logout_ticket_number.$invalid && FormFELogout.$submitted }">
+                                <input type="text" class="form-control" placeholder="Enter Logout ticket Number" data-ng-model="txt_logout_ticket_number" data-ng-disabled="ObjFeDetails.logout_status_id==1" required />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>NFSD Logout Snap</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.ddl_nfsd_logout_snap.$invalid && FormFELogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedNFSDLogoutSnap" name="ddl_nfsd_logout_snap" data-ng-disabled="ObjFeDetails.logout_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">Awaited</option>
+                                    <option value="3">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>NFSD Logout Snap Upload</b></label>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <input type="file" data-ng-model="UploadFile2" onchange="angular.element(this).scope().uploadFile2(this.files)" data-ng-disabled="ObjFeDetails.logout_status_id==1" id="FileUpload2" />
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                            <a data-ng-if="ObjFeDetails.nfsd_logout_snap_upload" title="download uploaded file" href="~/Upload-file/{{ObjFeDetails.nfsd_logout_snap_upload}}" download="{{ObjFeDetails.nfsd_logout_snap_upload}}" target="_blank" class="btn btn-success btn-sm pull-right"><i class="fa fa-download"></i></a>
+                        </div>
+                        <div data-ng-show="SelectedNFSDLogoutSnap==3 || SelectedNFSDLogoutSnap==0" class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Reason For Logout NFSD Snap NA</b></label>
+                        </div>
+                        <div data-ng-show="SelectedNFSDLogoutSnap==3 || SelectedNFSDLogoutSnap==0" class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Enter Reason For Logout" data-ng-disabled="ObjFeDetails.logout_status_id==1" data-ng-model="txt_reasonforlogoutnfsd"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>BB5216 Asset Tag #</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_eimlogin.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter BB5216 Asset Tag #" data-ng-model="txt_bb_asset_tag" name="txt_bb_asset_tag" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>BB5216 Serial #</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_bb_serial.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter BB5216 Serial #" data-ng-model="txt_bb_serial" name="txt_bb_serial" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>XMU Asset Tag #</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_xmu_asset_tag.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter XMU Asset Tag #" data-ng-model="txt_xmu_asset_tag" name="txt_xmu_asset_tag" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>XMU Serial #</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_xmu_serial.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter XMU Serial #" data-ng-model="txt_xmu_serial" name="txt_xmu_serial" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>DU Type Removed</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_du_type_removed.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter DU Type Removed" data-ng-model="txt_du_type_removed" name="txt_du_type_removed" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Qty Removed</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_qty_removed.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter Qty Removed" data-ng-model="txt_qty_removed" name="txt_qty_removed" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>DUS Asset Tag #</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_dus_asset.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter DUS Asset Tag #" data-ng-model="txt_dus_asset" name="txt_dus_asset" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>DUS Serial #</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_dus_serial.$invalid && FormFELogout.$submitted }">
+                                <textarea class="form-control" placeholder="Enter DUS Serial #" data-ng-model="txt_dus_serial" name="txt_dus_serial" data-ng-disabled="ObjFeDetails.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Site Type</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.ddl_site_type.$invalid && FormFELogout.$submitted }">
+                                <select class="form-control" data-ng-model="Selectedsitetype" name="ddl_site_type" data-ng-disabled="ObjFeDetails.logout_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Indoor</option>
+                                    <option value="2">Outdoor</option>
+                                    <option value="3">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Total Miles Driven</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormFELogout.txt_miles_driven.$invalid && FormFELogout.$submitted }">
+                                <input type="text" class="form-control" placeholder="Enter Total Miles Driven" oninput="this.value=this.value.replace(/[^\\0-9\\.]/g,'');" data-ng-model="txt_miles_driven" name="txt_miles_driven" data-ng-disabled="ObjFeDetails.logout_status_id==1" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0; margin-top: 20px;">
+                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align: center">
+                            <input data-ng-if="ObjFeDetails.logout_status_id!=1" type="submit" class="btn btn-success" value="Submit" data-ng-click="setAtts('Submit')" name="Submit" id="btnSubmit" />
+                            <input data-ng-if="ObjFeDetails.logout_status_id!=1" type="button" class="btn btn-primary" value="Save" data-ng-click="BtnSaveClick()" name="Save" id="btnSave" />
+                            <input type="button" class="btn btn-info" value="Back" name="Back" data-ng-click="BtnBack_Click()" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>CVGET</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogin.ddl_cvget.$invalid && FormIntegrationLogin.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedCVGET" name="ddl_cvget" data-ng-disabled="ObjIntegration.login_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3" data-ng-show="SelectedStatus==4 || SelectedStatus==5">
+                            <label><b>Cancelled/Rollback Reason</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3" data-ng-show="SelectedStatus==4 || SelectedStatus==5">
+                            <div class="form-group">
+                                <select class="form-control" data-ng-model="SelectedCancelledRollbackReason" name="ddl_rollback" data-ng-disabled="ObjIntegration.login_status_id==1">
+                                    <option value="">--Select--</option>
+                                    <option value="1">Missing Hardware</option>
+                                    <option value="2">Time Constraint</option>
+                                    <option value="3">Emergency call ongoing</option>
+                                    <option value="4">LKF missing/Faulty</option>
+                                    <option value="5">Miscellaneous(Weather, Bird nest etc.)</option>
+                                    <option value="6">PSAP failure</option>
+                                    <option value="7">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Pre DCGK</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogin.ddl_dcgk.$invalid && FormIntegrationLogin.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedPreDCGK" name="ddl_dcgk" data-ng-disabled="ObjIntegration.login_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Integration/RAN LOGIN Engineer</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogin.ddl_ran_login_engineer.$invalid && FormIntegrationLogin.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedRANLoginEngineerAssigned" name="ddl_ran_login_engineer" data-ng-disabled="ObjIntegration.login_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="{{x.id}}" data-ng-repeat="x in EngineerList" data-ng-selected="x.id==SelectedRANLoginEngineerAssigned">{{x.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Pre Check sent to Customer</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogin.ddl_customer.$invalid && FormIntegrationLogin.$submitted }">
+                                <select class="form-control" data-ng-model="Selectedsenttocustomer" name="ddl_customer" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Pre Logs Upload</b></label>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <input type="file" data-ng-model='UploadedFile' onchange="angular.element(this).scope().uploadFile(this.files)" id="FileUpload1" />
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                            <a data-ng-if="ObjIntegration.pre_logs_upload" title="download uploaded file" href="~/Upload-file/{{ObjIntegration.pre_logs_upload}}" download="{{ObjIntegration.pre_logs_upload}}" target="_blank" class="btn btn-success btn-sm pull-right"><i class="fa fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Pre Check Alarms/Issues</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <textarea data-ng-model="txt_alarms_issues" placeholder="Enter Pre Check Alarms/issues" class="form-control" data-ng-disabled="ObjIntegration.login_status_id==1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin: 0; margin-top: 20px;">
+                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align: center">
+                            <input type="submit" class="btn btn-success" value="Submit" data-ng-click="setAtts('Submit')" name="Submit" id="btnSubmit" />
+                            <input data-ng-if="ObjIntegration.login_status_id!=1" type="submit" class="btn btn-primary" value="Save" data-ng-click="setAtts('Save')" name="Save" id="btnSave" />
+                            <a class="btn btn-default" href="/#/ixdashboard">Back</a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>GS</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddl_gs.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedGS" name="ddl_gs" data-ng-disabled="ObjIntegration.logout_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">NA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Post DCGK</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddl_postdc.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedPostDCGK" name="ddl_postdc" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>IX Reports sent to Customer</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddl_ix_report.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedIXReports" name="ddl_ix_report" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Logs Uploaded</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddl_LogsUploaded.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedLogsUploaded" name="ddl_LogsUploaded" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    <option value="2">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>KPI Required</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddl_kpi.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedKPIRequired" name="ddl_kpi" data-ng-disabled="ObjIntegration.logout_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Activity Complete Date</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.txt_activity_complete_date.$invalid && FormIntegrationLogout.$submitted }">
+                                <div class="input-group date" moment-picker="txt_activity_complete_date" format="MM/DD/YYYY" start-view="month" today="true">
+                                    <input type="text" class="form-control" name="txt_activity_complete_date" data-ng-model="txt_activity_complete_date" ng-model-options="{ updateOn: 'blur' }" data-ng-disabled="ObjIntegration.logout_status_id==1" required>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Activity Complete Time({{market_time_zone}})</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <input type="text" data-ng-model="txt_activity_complete_time_cst" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Post Logs Upload</b></label>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <input type="file" data-ng-model='UploadedFile' onchange="angular.element(this).scope().uploadFile(this.files)" id="FileUpload1" />
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                            <a data-ng-if="ObjIntegration.post_logs_upload" title="download uploaded file" href="~/Upload-file/{{ObjIntegration.post_logs_upload}}" download="{{ObjIntegration.post_logs_upload}}" target="_blank" class="btn btn-success btn-sm pull-right"><i class="fa fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Integration/RAN LOGOUT Engineer</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddl_ran_logout_engineer.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" data-ng-model="SelectedRANLogoutEngineerAssigned" name="ddl_ran_logout_engineer" data-ng-disabled="ObjIntegration.logout_status_id==1" s required>
+                                    <option value="">--Select--</option>
+                                    <option value="{{x.id}}" data-ng-repeat="x in EngineerList" data-ng-selected="x.id==SelectedRANLogoutEngineerAssigned">{{x.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>PSAP Status</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.ddlPSAPStatus.$invalid && FormIntegrationLogout.$submitted }">
+                                <select class="form-control" name="ddlPSAPStatus" data-ng-model="SelectedPSAPStatus" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Ongoing</option>
+                                    <option value="2">Completed</option>
+                                    <option value="3">Partially Completed</option>
+                                    <option value="4">Failed</option>
+                                    <option value="5">NA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Post Check Alarms/Issues</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.txt_post_alarms_issues.$invalid && FormIntegrationLogout.$submitted }">
+                                <textarea name="txt_post_alarms_issues" data-ng-model="txt_post_alarms_issues" placeholder="Enter Post Check Alarms/issues" class="form-control" data-ng-disabled="ObjIntegration.logout_status_id==1" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Comments</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogout.txt_comments.$invalid && FormIntegrationLogout.$submitted }">
+                                <textarea placeholder="Enter Comments" name="txt_comments" data-ng-model="txt_comments" class="form-control" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0; margin-top:20px;">
+                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align:center">
+                            <input type="submit" class="btn btn-success" value="Submit" data-ng-click="setAtts('Submit')" name="Submit" id="btnSubmit" />
+                            <input data-ng-if="ObjIntegration.logout_status_id!=1" type="button" class="btn btn-primary" value="Save" data-ng-click="BtnSaveClick()" name="Save" id="btnSave" />
+                            <a class="btn btn-default" href="/#/ixdashboard">Back</a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin:0;">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><b>Status</b></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group" data-ng-class="{ 'has-error' : FormIntegrationLogin.ddl_status.$invalid && FormIntegrationLogin.$submitted }">
+                                <select class="form-control" name="ddl_status" data-ng-model="SelectedStatus" data-ng-disabled="ObjIntegration.login_status_id==1" required>
+                                    <option value="">--Select--</option>
+                                    <option value="1">Scheduled</option>
+                                    <option value="2">Ongoing</option>
+                                    <option value="3">Completed</option>
+                                    <option value="4">Cancelled</option>
+                                    <option value="5">Rollback</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
